@@ -114,7 +114,7 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
       <span class="rbl">Royal British Legion</span>
       <span class="forget">Lest We Forget</span>
       <hr>
-      <span class="appeal">Westhoughton Poppy Appeal 2025</span>
+      <span class="appeal">Westhoughton Poppy Appeal 2026</span>
     </div>
     <p class="header-sub">Volunteer Booking</p>
   </div>
@@ -193,8 +193,8 @@ const STORES=["Sainsbury's","Aldi Westhoughton","Aldi Cutacre","Lidl Westhoughto
 const MAX_PER_SLOT=2;
 
 const DATES=[];
-const start=new Date(2025,9,24);
-const end=new Date(2025,10,8);
+const start=new Date(2026,9,23);
+const end=new Date(2026,10,7);
 for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
   const day=d.getDay();
   if(day===5||day===6||day===0) DATES.push(new Date(d));
