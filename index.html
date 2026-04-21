@@ -7,96 +7,99 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
-.app { max-width: 700px; margin: 0 auto; padding: 0 16px 32px; }
-
-.header { text-align: center; padding: 24px 16px 16px; }
-.header-badge { display: inline-block; background: #8B0000; border-radius: 12px; padding: 18px 28px 14px; box-shadow: 0 3px 12px rgba(0,0,0,0.25); }
-.header-badge .poppy { font-size: 52px; display: block; margin-bottom: 6px; }
-.header-badge .rbl { font-size: 22px; font-weight: bold; color: white; letter-spacing: 1px; display: block; }
+.app { max-width: 740px; margin: 0 auto; padding: 0 12px 32px; }
+.header { text-align: center; padding: 22px 16px 14px; }
+.header-badge { display: inline-block; background: #8B0000; border-radius: 12px; padding: 16px 28px 13px; box-shadow: 0 3px 12px rgba(0,0,0,0.25); }
+.header-badge .poppy { font-size: 48px; display: block; margin-bottom: 5px; }
+.header-badge .rbl { font-size: 21px; font-weight: bold; color: white; letter-spacing: 1px; display: block; }
 .header-badge .forget { font-size: 11px; color: #ffaaaa; letter-spacing: 3px; text-transform: uppercase; display: block; margin-top: 2px; }
-.header-badge .divider { border: none; border-top: 1px solid rgba(255,255,255,0.25); margin: 10px 0 8px; }
-.header-badge .appeal { font-size: 14px; color: #ffcccc; display: block; }
-.header-sub { font-size: 14px; color: #2a5a8a; margin-top: 10px; font-style: italic; }
-
-.tabs { display: flex; gap: 4px; margin: 14px 0; }
-.tab { flex: 1; padding: 13px 8px; background: rgba(255,255,255,0.45); color: #1a4a8a; border: none; border-radius: 8px; font-size: 16px; font-family: Georgia, serif; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+.header-badge hr { border: none; border-top: 1px solid rgba(255,255,255,0.25); margin: 9px 0 7px; }
+.header-badge .appeal { font-size: 13px; color: #ffcccc; display: block; }
+.header-sub { font-size: 14px; color: #2a5a8a; margin-top: 8px; font-style: italic; }
+.tabs { display: flex; gap: 4px; margin: 12px 0; }
+.tab { flex: 1; padding: 13px 8px; background: rgba(255,255,255,0.45); color: #1a4a8a; border: none; border-radius: 8px; font-size: 16px; font-family: Georgia, serif; cursor: pointer; font-weight: bold; }
 .tab.active { background: white; color: #8B0000; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
 .tab:hover:not(.active) { background: rgba(255,255,255,0.65); }
-
-.panel { background: white; border-radius: 12px; padding: 22px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-
-.step-label { font-size: 13px; color: #999; margin-bottom: 14px; }
-.field-label { font-size: 16px; color: #333; font-weight: bold; margin-bottom: 6px; display: block; }
-.field-hint { font-size: 13px; color: #888; margin-bottom: 14px; display: block; }
-.text-input { width: 100%; padding: 13px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; font-family: Georgia, serif; margin-bottom: 12px; transition: border-color 0.2s; }
-.text-input:focus { outline: none; border-color: #8B0000; }
-
-.big-btn { width: 100%; padding: 15px; font-size: 17px; border-radius: 8px; border: none; cursor: pointer; font-family: Georgia, serif; font-weight: bold; background: #8B0000; color: white; transition: background 0.2s; }
-.big-btn:hover { background: #a00000; }
-.big-btn:disabled { background: #bbb; cursor: not-allowed; }
-
-.chat-messages { min-height: 300px; max-height: 420px; overflow-y: auto; margin-bottom: 14px; display: flex; flex-direction: column; gap: 10px; padding: 4px 0; }
-.msg { padding: 13px 16px; border-radius: 14px; max-width: 88%; font-size: 16px; line-height: 1.6; }
-.msg.ai { background: #f4f0f0; color: #222; border-bottom-left-radius: 4px; align-self: flex-start; }
-.msg.user { background: #8B0000; color: white; border-bottom-right-radius: 4px; align-self: flex-end; }
-.msg.ai strong { color: #8B0000; }
-
-.chat-input-row { display: flex; gap: 8px; }
-.chat-input-row input { flex: 1; padding: 14px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; font-family: Georgia, serif; transition: border-color 0.2s; }
-.chat-input-row input:focus { outline: none; border-color: #8B0000; }
-.chat-input-row button { padding: 14px 20px; background: #8B0000; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-family: Georgia, serif; font-weight: bold; transition: background 0.2s; }
-.chat-input-row button:hover { background: #a00000; }
-.chat-input-row button:disabled { background: #bbb; cursor: not-allowed; }
-
-.loading-dots { display: inline-flex; gap: 5px; align-items: center; padding: 4px 0; }
-.loading-dots span { width: 8px; height: 8px; background: #8B0000; border-radius: 50%; animation: bounce 1s infinite; }
-.loading-dots span:nth-child(2) { animation-delay: 0.15s; }
-.loading-dots span:nth-child(3) { animation-delay: 0.3s; }
-@keyframes bounce { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
-
-.ics-link { display: block; background: #e8f5e8; border: 1px solid #2d6a2d; color: #2d6a2d; padding: 11px 16px; border-radius: 8px; text-decoration: none; font-size: 15px; margin-top: 10px; text-align: center; font-family: Georgia, serif; }
+.panel { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.intro { font-size: 16px; color: #444; margin-bottom: 14px; line-height: 1.6; }
+.intro strong { color: #8B0000; }
+.legend { display: flex; gap: 16px; font-size: 13px; margin-bottom: 16px; flex-wrap: wrap; }
+.legend span { display: flex; align-items: center; gap: 5px; }
+.dot { width: 13px; height: 13px; border-radius: 50%; display: inline-block; }
+.dot.green { background: #2d6a2d; }
+.dot.orange { background: #856404; }
+.dot.red { background: #842029; }
+.store-section { margin-bottom: 24px; }
+.store-label { font-size: 16px; font-weight: bold; color: #8B0000; border-bottom: 2px solid #8B0000; padding-bottom: 5px; margin-bottom: 10px; }
+.booking-grid { display: grid; grid-template-columns: 120px repeat(4, 1fr); gap: 4px; font-size: 12px; }
+.grid-hdr { font-weight: bold; color: #555; padding: 7px 4px; text-align: center; background: #f5f5f5; border-radius: 4px; font-size: 11px; }
+.grid-hdr.left { text-align: left; padding-left: 6px; }
+.grid-day { font-size: 12px; color: #333; padding: 6px; background: #f9f9f9; border-radius: 4px; display: flex; align-items: center; font-weight: bold; }
+.slot-btn { padding: 7px 3px; border-radius: 6px; border: 2px solid transparent; cursor: pointer; font-family: Georgia, serif; font-size: 11px; min-height: 50px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.15s; text-align: center; line-height: 1.3; }
+.slot-btn.open { background: #f0f8f0; border-color: #2d6a2d; color: #2d6a2d; }
+.slot-btn.open:hover { background: #d4edda; transform: scale(1.04); }
+.slot-btn.half { background: #fff8e8; border-color: #c8960a; color: #856404; }
+.slot-btn.half:hover { background: #fff3cd; transform: scale(1.04); }
+.slot-btn.full { background: #f8d7da; border-color: #842029; color: #842029; cursor: not-allowed; }
+.slot-btn .slot-status { font-weight: bold; }
+.slot-btn .slot-names { font-size: 10px; margin-top: 3px; color: #555; }
+.slot-btn.full .slot-names { color: #842029; }
+.modal-bg { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.55); z-index: 100; align-items: center; justify-content: center; padding: 16px; }
+.modal-bg.show { display: flex; }
+.modal { background: white; border-radius: 14px; padding: 26px; max-width: 440px; width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.modal h2 { font-size: 20px; color: #8B0000; margin-bottom: 8px; }
+.modal .slot-info { font-size: 15px; color: #555; margin-bottom: 16px; padding: 10px 14px; background: #f5f0f0; border-radius: 8px; border-left: 4px solid #8B0000; line-height: 1.7; }
+.modal .pair-hint { font-size: 13px; color: #555; margin-bottom: 14px; background: #f0f8f0; padding: 9px 12px; border-radius: 6px; line-height: 1.5; border-left: 3px solid #2d6a2d; }
+.modal label { font-size: 15px; font-weight: bold; color: #333; margin-bottom: 5px; display: block; }
+.modal input { width: 100%; padding: 12px; font-size: 16px; border: 2px solid #ddd; border-radius: 8px; font-family: Georgia, serif; margin-bottom: 12px; }
+.modal input:focus { outline: none; border-color: #8B0000; }
+.modal .hint { font-size: 13px; color: #888; margin-bottom: 16px; margin-top: -8px; }
+.modal .btn-row { display: flex; gap: 10px; }
+.btn-confirm { flex: 1; padding: 14px; background: #8B0000; color: white; border: none; border-radius: 8px; font-size: 16px; font-family: Georgia, serif; font-weight: bold; cursor: pointer; }
+.btn-confirm:hover { background: #a00000; }
+.btn-cancel { flex: 1; padding: 14px; background: #f5f5f5; color: #555; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; font-family: Georgia, serif; cursor: pointer; }
+.btn-cancel:hover { background: #eee; }
+.success-box { text-align: center; padding: 10px 0; }
+.success-box .tick { font-size: 54px; display: block; margin-bottom: 10px; }
+.success-box h2 { font-size: 22px; color: #2d6a2d; margin-bottom: 10px; }
+.success-box p { font-size: 16px; color: #444; margin-bottom: 18px; line-height: 1.7; }
+.ics-link { display: block; background: #e8f5e8; border: 2px solid #2d6a2d; color: #2d6a2d; padding: 13px 16px; border-radius: 8px; text-decoration: none; font-size: 15px; margin-bottom: 10px; text-align: center; font-family: Georgia, serif; font-weight: bold; }
 .ics-link:hover { background: #d4edda; }
-
+.book-another { width: 100%; padding: 13px; background: #8B0000; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: Georgia, serif; font-weight: bold; margin-top: 6px; }
+.book-another:hover { background: #a00000; }
 .pin-box { text-align: center; padding: 16px 0 8px; }
 .pin-box h3 { font-size: 22px; color: #8B0000; margin-bottom: 10px; }
 .pin-box p { font-size: 15px; color: #666; margin-bottom: 18px; }
 .pin-input { width: 160px; padding: 16px; font-size: 30px; border: 2px solid #ddd; border-radius: 8px; text-align: center; letter-spacing: 12px; font-family: Georgia, serif; }
 .pin-input:focus { outline: none; border-color: #8B0000; }
 .pin-error { color: #cc0000; font-size: 14px; margin-top: 10px; min-height: 20px; }
-
-.rota-section { margin-bottom: 24px; }
+.pin-btn { max-width: 220px; margin: 14px auto 0; display: block; padding: 14px; background: #8B0000; color: white; border: none; border-radius: 8px; font-size: 16px; font-family: Georgia, serif; font-weight: bold; cursor: pointer; width: 100%; }
+.rota-section { margin-bottom: 22px; }
 .rota-section h3 { font-size: 16px; color: #8B0000; margin-bottom: 8px; border-bottom: 2px solid #8B0000; padding-bottom: 5px; }
 .rota-grid { display: grid; grid-template-columns: 145px 1fr 1fr 1fr 1fr; gap: 3px; font-size: 12px; }
-.rota-hdr { font-weight: bold; color: #555; padding: 7px 4px; text-align: center; background: #f5f5f5; border-radius: 4px; font-size: 12px; }
+.rota-hdr { font-weight: bold; color: #555; padding: 7px 4px; text-align: center; background: #f5f5f5; border-radius: 4px; }
 .rota-hdr.left { text-align: left; padding-left: 6px; }
-.rota-cell { padding: 6px 4px; text-align: center; border-radius: 4px; min-height: 48px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; line-height: 1.3; }
+.rota-cell { padding: 6px 4px; text-align: center; border-radius: 4px; min-height: 48px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; }
 .rota-cell.open { background: #f0f0f0; color: #777; }
 .rota-cell.half { background: #fff3cd; color: #856404; font-weight: bold; }
 .rota-cell.full { background: #d4edda; color: #155724; font-weight: bold; }
 .rota-cell .vol-names { font-size: 10px; margin-top: 3px; color: #444; line-height: 1.3; }
-
-.legend { display: flex; gap: 18px; font-size: 13px; margin-bottom: 16px; flex-wrap: wrap; }
-.legend span { display: flex; align-items: center; gap: 5px; }
-.dot { width: 13px; height: 13px; border-radius: 50%; display: inline-block; }
-.dot.grey { background: #aaa; }
-.dot.orange { background: #856404; }
-.dot.green { background: #155724; }
-
-.print-btn { width: 100%; padding: 13px; background: #8B0000; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: Georgia, serif; margin-bottom: 16px; font-weight: bold; }
-.print-btn:hover { background: #a00000; }
-
-.save-notice { font-size: 13px; color: #888; text-align: center; padding: 8px 0; min-height: 20px; }
-
+.rota-legend { display: flex; gap: 16px; font-size: 13px; margin-bottom: 14px; flex-wrap: wrap; }
+.rota-legend span { display: flex; align-items: center; gap: 5px; }
+.dot-r { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.dot-r.grey { background: #aaa; }
+.dot-r.orange { background: #856404; }
+.dot-r.green { background: #155724; }
+.print-btn { width: 100%; padding: 13px; background: #8B0000; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: Georgia, serif; margin-bottom: 14px; font-weight: bold; }
 @media (max-width: 480px) {
-  .rota-grid { grid-template-columns: 110px 1fr 1fr 1fr 1fr; font-size: 11px; }
-  .rota-hdr { font-size: 10px; padding: 5px 2px; }
-  .rota-cell { font-size: 10px; min-height: 40px; }
-  .msg { font-size: 15px; }
+  .booking-grid { grid-template-columns: 80px repeat(4,1fr); gap: 3px; }
+  .grid-hdr,.grid-day,.slot-btn { font-size: 10px; }
+  .slot-btn { min-height: 44px; padding: 4px 2px; }
+  .rota-grid { grid-template-columns: 100px 1fr 1fr 1fr 1fr; }
 }
-
 @media print {
   body { background: white; }
-  .tabs, .chat-messages, .chat-input-row, .print-btn, .pin-box, .legend, .header-sub, .save-notice { display: none !important; }
+  .tabs,.print-btn,.pin-box,.rota-legend,.header-sub { display: none !important; }
   .panel { box-shadow: none; padding: 0; }
   .rota-cell.half { background: #ffe082 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .rota-cell.full { background: #a5d6a7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -105,13 +108,12 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
 </head>
 <body>
 <div class="app">
-
   <div class="header">
     <div class="header-badge">
       <span class="poppy">🌹</span>
       <span class="rbl">Royal British Legion</span>
       <span class="forget">Lest We Forget</span>
-      <hr class="divider">
+      <hr>
       <span class="appeal">Westhoughton Poppy Appeal 2025</span>
     </div>
     <p class="header-sub">Volunteer Booking</p>
@@ -123,21 +125,22 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
   </div>
 
   <div id="tab-book" class="panel">
-    <div id="name-step">
-      <div class="step-label">Step 1 of 2 — Tell us who you are</div>
-      <label class="field-label">Your name:</label>
-      <input class="text-input" type="text" id="vol-name" placeholder="e.g. Margaret Smith" autocomplete="name" />
-      <label class="field-label">Your email address:</label>
-      <input class="text-input" type="email" id="vol-email" placeholder="e.g. margaret@email.com" autocomplete="email" />
-      <span class="field-hint">We'll send you a calendar reminder for your shift</span>
-      <button class="big-btn" onclick="startChat()">Continue →</button>
+    <div id="grid-view">
+      <p class="intro">Thank you for volunteering! <strong>Tap any slot to book your place.</strong> Scroll down to see all four stores and all dates.</p>
+      <div class="legend">
+        <span><span class="dot green"></span> Free — tap to book</span>
+        <span><span class="dot orange"></span> 1 booked — 1 more needed</span>
+        <span><span class="dot red"></span> Full</span>
+      </div>
+      <div id="booking-grid-container"></div>
     </div>
-    <div id="chat-step" style="display:none;">
-      <div class="step-label" id="chat-label">Step 2 of 2 — Book your slot</div>
-      <div class="chat-messages" id="chat-messages"></div>
-      <div class="chat-input-row">
-        <input type="text" id="chat-input" placeholder="Type your message here..." onkeydown="if(event.key==='Enter')sendMsg()" />
-        <button onclick="sendMsg()" id="send-btn">Send</button>
+    <div id="success-view" style="display:none;">
+      <div class="success-box">
+        <span class="tick">✅</span>
+        <h2>You're booked in!</h2>
+        <p id="success-msg"></p>
+        <a id="ics-link" class="ics-link" download="poppy-appeal-shift.ics">📅 Download Calendar Reminder</a>
+        <button class="book-another" onclick="showGridView()">Book another slot</button>
       </div>
     </div>
   </div>
@@ -149,34 +152,49 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
         <p>Enter your PIN to view the volunteer rota</p>
         <input class="pin-input" type="password" id="pin-input" maxlength="4" inputmode="numeric" onkeydown="if(event.key==='Enter')checkPin()" placeholder="••••" />
         <div class="pin-error" id="pin-error"></div>
-        <button class="big-btn" style="max-width:220px;margin:14px auto 0;display:block;" onclick="checkPin()">View Rota</button>
+        <button class="pin-btn" onclick="checkPin()">View Rota</button>
       </div>
     </div>
     <div id="rota-step" style="display:none;">
       <button class="print-btn" onclick="window.print()">🖨 Print Rota</button>
-      <div class="legend">
-        <span><span class="dot grey"></span> Empty</span>
-        <span><span class="dot orange"></span> 1 volunteer</span>
-        <span><span class="dot green"></span> Full (2 volunteers)</span>
+      <div class="rota-legend">
+        <span><span class="dot-r grey"></span> Empty</span>
+        <span><span class="dot-r orange"></span> 1 volunteer</span>
+        <span><span class="dot-r green"></span> Full (2 volunteers)</span>
       </div>
       <div id="rota-content"></div>
-      <div class="save-notice" id="save-notice"></div>
     </div>
   </div>
+</div>
 
+<div class="modal-bg" id="modal-bg" onclick="closeModalBg(event)">
+  <div class="modal">
+    <h2>Book this slot</h2>
+    <div class="slot-info" id="modal-slot-info"></div>
+    <p class="pair-hint">💡 Coming with someone? Just put both names — e.g. "Dave Smith &amp; Mary Jones"</p>
+    <label>Your name (or both names):</label>
+    <input type="text" id="modal-name" placeholder="e.g. Dave Smith" autocomplete="name" onkeydown="if(event.key==='Enter')document.getElementById('modal-email').focus()" />
+    <label>Your email address:</label>
+    <input type="email" id="modal-email" placeholder="e.g. dave@email.com" autocomplete="email" onkeydown="if(event.key==='Enter')confirmBooking()" />
+    <p class="hint">We'll give you a calendar reminder to download</p>
+    <div class="btn-row">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-confirm" onclick="confirmBooking()">Confirm Booking</button>
+    </div>
+  </div>
 </div>
 
 <script>
-const CORRECT_PIN = '0898';
-const COORDINATOR_EMAIL = 'westhoughtonpoppyappeal@gmail.com';
-const SHEET_URL = ''; // Paste Google Apps Script URL here when ready
-const SLOTS = ['9–11am','11–1pm','1–3pm','3–5pm'];
-const STORES = ["Sainsbury's","Aldi Westhoughton","Aldi Cutacre","Lidl Westhoughton"];
-const MAX_PER_SLOT = 2;
+const CORRECT_PIN='0898';
+const COORDINATOR_EMAIL='westhoughtonpoppyappeal@gmail.com';
+const SHEET_URL='';
+const SLOTS=['9–11am','11–1pm','1–3pm','3–5pm'];
+const STORES=["Sainsbury's","Aldi Westhoughton","Aldi Cutacre","Lidl Westhoughton"];
+const MAX_PER_SLOT=2;
 
-const DATES = [];
-const start = new Date(2025,9,24);
-const end = new Date(2025,10,8);
+const DATES=[];
+const start=new Date(2025,9,24);
+const end=new Date(2025,10,8);
 for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
   const day=d.getDay();
   if(day===5||day===6||day===0) DATES.push(new Date(d));
@@ -184,19 +202,21 @@ for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
 
 function dateKey(d){return d.toISOString().split('T')[0];}
 function fmtDate(d){return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});}
+function fmtShort(d){return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});}
 
 const bookings={};
 DATES.forEach(d=>{
-  const dk=dateKey(d); bookings[dk]={};
+  const dk=dateKey(d);bookings[dk]={};
   STORES.forEach(s=>{bookings[dk][s]={};SLOTS.forEach(sl=>{bookings[dk][s][sl]=[];});});
 });
 
-let volName='', volEmail='', conversation=[];
+let pendingBooking=null;
 
 function showTab(t){
   document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',(i===0&&t==='book')||(i===1&&t==='rota')));
   document.getElementById('tab-book').style.display=t==='book'?'':'none';
   document.getElementById('tab-rota').style.display=t==='rota'?'':'none';
+  if(t==='rota'&&document.getElementById('rota-step').style.display!=='none') renderRota();
 }
 
 function checkPin(){
@@ -211,270 +231,129 @@ function checkPin(){
   }
 }
 
-function startChat(){
-  const n=document.getElementById('vol-name').value.trim();
-  const e=document.getElementById('vol-email').value.trim();
-  if(!n){alert('Please enter your name to continue.');return;}
-  volName=n; volEmail=e;
-  document.getElementById('name-step').style.display='none';
-  document.getElementById('chat-step').style.display='';
-  document.getElementById('chat-label').textContent='Step 2 of 2 — Hi '+volName.split(' ')[0]+'! Book your slot below';
-  conversation=[];
-  addMsg('ai','Hello '+volName.split(' ')[0]+'! 👋 Welcome to the Westhoughton Poppy Appeal volunteer booking.\n\nJust tell me when you\'d like to help and which supermarket. For example:\n\n<strong>"I can do Saturday 25th October at Sainsbury\'s, 9 till 11"</strong>\n\nIf you\'re bringing a friend:\n\n<strong>"Me and Mary Jones can do Sunday at Lidl, 1 till 3"</strong>\n\nYou can also ask <strong>"when am I working?"</strong> or <strong>"what slots are still free?"</strong>');
-  setTimeout(()=>document.getElementById('chat-input').focus(),100);
-}
-
-function addMsg(who,html){
-  const el=document.createElement('div');
-  el.className='msg '+who;
-  el.innerHTML=html.replace(/\n/g,'<br>');
-  document.getElementById('chat-messages').appendChild(el);
-  el.scrollIntoView({behavior:'smooth',block:'nearest'});
-  return el;
-}
-
-function showLoading(){
-  const el=document.createElement('div');
-  el.className='msg ai'; el.id='loading-msg';
-  el.innerHTML='<div class="loading-dots"><span></span><span></span><span></span></div>';
-  document.getElementById('chat-messages').appendChild(el);
-  el.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-function removeLoading(){const el=document.getElementById('loading-msg');if(el)el.remove();}
-
-function tryLocalAnswer(text){
-  const t=text.toLowerCase();
-  if(t.match(/free|available|what.*(slot|time)|when.*free|any.*slot|what's left|whats left/)){
-    let reply='Here\'s what\'s still available:\n\n';
-    let foundAny=false;
-    DATES.forEach(d=>{
-      const dk=dateKey(d); let dayLines=[];
-      STORES.forEach(store=>{
-        SLOTS.forEach(slot=>{
-          const names=bookings[dk][store][slot];
-          if(names.length<MAX_PER_SLOT){
-            const spaces=MAX_PER_SLOT-names.length;
-            dayLines.push(store+' — '+slot+' ('+spaces+' space'+(spaces>1?'s':'')+' left)');
-            foundAny=true;
-          }
-        });
-      });
-      if(dayLines.length) reply+='<strong>'+fmtDate(d)+'</strong>\n'+dayLines.join('\n')+'\n\n';
-    });
-    if(!foundAny) reply='All slots are currently fully booked! Please contact Lindsay at '+COORDINATOR_EMAIL;
-    return reply.trim();
-  }
-  if(t.match(/when.*i.*work|my.*shift|my.*slot|am i.*book|what.*i.*doing|have i.*book/)){
-    let shifts=[];
+function buildGrid(){
+  const container=document.getElementById('booking-grid-container');
+  container.innerHTML='';
+  STORES.forEach(store=>{
+    const sec=document.createElement('div');
+    sec.className='store-section';
+    sec.innerHTML='<div class="store-label">'+store+'</div>';
+    const grid=document.createElement('div');
+    grid.className='booking-grid';
+    grid.innerHTML='<div class="grid-hdr left">Date</div>'+SLOTS.map(s=>'<div class="grid-hdr">'+s+'</div>').join('');
     DATES.forEach(d=>{
       const dk=dateKey(d);
-      STORES.forEach(store=>{
-        SLOTS.forEach(slot=>{
-          if(bookings[dk][store][slot].some(n=>n.toLowerCase()===volName.toLowerCase()))
-            shifts.push(fmtDate(d)+' — '+store+', '+slot);
-        });
+      const dayDiv=document.createElement('div');
+      dayDiv.className='grid-day';
+      dayDiv.textContent=fmtShort(d);
+      grid.appendChild(dayDiv);
+      SLOTS.forEach(slot=>{
+        const names=bookings[dk][store][slot];
+        const btn=document.createElement('button');
+        let cls,statusText;
+        if(names.length>=MAX_PER_SLOT){cls='full';statusText='Full';btn.disabled=true;}
+        else if(names.length===1){cls='half';statusText='1 booked';}
+        else{cls='open';statusText='Free';}
+        btn.className='slot-btn '+cls;
+        btn.innerHTML='<span class="slot-status">'+statusText+'</span>'+(names.length?'<span class="slot-names">'+names.join(', ')+'</span>':'');
+        if(names.length<MAX_PER_SLOT) btn.onclick=()=>openModal(d,store,slot);
+        grid.appendChild(btn);
       });
     });
-    if(!shifts.length) return 'I don\'t have any shifts booked for you yet, '+volName.split(' ')[0]+'! Would you like to book one?';
-    return 'Here are your shifts, '+volName.split(' ')[0]+':\n\n'+shifts.join('\n')+'\n\nThank you so much for volunteering! 🌹';
-  }
-  return null;
+    sec.appendChild(grid);
+    container.appendChild(sec);
+  });
 }
 
-async function sendMsg(){
-  const inp=document.getElementById('chat-input');
-  const text=inp.value.trim();
-  if(!text) return;
-  inp.value='';
-  document.getElementById('send-btn').disabled=true;
-  addMsg('user',text);
+function openModal(date,store,slot){
+  pendingBooking={date,store,slot};
+  document.getElementById('modal-slot-info').innerHTML='<strong>'+fmtDate(date)+'</strong><br>'+store+'<br>'+slot;
+  document.getElementById('modal-name').value='';
+  document.getElementById('modal-email').value='';
+  document.getElementById('modal-bg').classList.add('show');
+  setTimeout(()=>document.getElementById('modal-name').focus(),150);
+}
 
-  const local=tryLocalAnswer(text);
-  if(local){
-    addMsg('ai',local);
-    document.getElementById('send-btn').disabled=false;
-    inp.focus();
+function closeModal(){
+  document.getElementById('modal-bg').classList.remove('show');
+  pendingBooking=null;
+}
+
+function closeModalBg(e){
+  if(e.target===document.getElementById('modal-bg')) closeModal();
+}
+
+function confirmBooking(){
+  const nameRaw=document.getElementById('modal-name').value.trim();
+  const email=document.getElementById('modal-email').value.trim();
+  if(!nameRaw){alert('Please enter your name.');document.getElementById('modal-name').focus();return;}
+  if(!pendingBooking) return;
+  const {date,store,slot}=pendingBooking;
+  const dk=dateKey(date);
+  const slotArr=bookings[dk][store][slot];
+  let volunteers=[nameRaw];
+  const splitMatch=nameRaw.match(/^(.+?)\s*(?:&|and|\/)\s*(.+)$/i);
+  if(splitMatch) volunteers=[splitMatch[1].trim(),splitMatch[2].trim()];
+  const spacesLeft=MAX_PER_SLOT-slotArr.length;
+  if(volunteers.length>spacesLeft){
+    alert('Sorry — this slot only has '+spacesLeft+' space'+(spacesLeft>1?'s':'')+' left. Please choose a different slot or book just yourself.');
     return;
   }
-
-  showLoading();
-  conversation.push({role:'user',content:text});
-
-  const systemPrompt=`You are a warm, patient volunteer booking assistant for the Westhoughton Poppy Appeal 2025. You are helping ${volName} book their volunteering slots.
-
-KEY DETAILS:
-- Volunteer: ${volName} (email: ${volEmail||'not provided'})
-- Collection dates: Weekends only — Friday 24 October to Saturday 8 November 2025 (Fri/Sat/Sun)
-- Stores: Sainsbury's, Aldi Westhoughton, Aldi Cutacre, Lidl Westhoughton
-- Time slots: 9-11am, 11am-1pm, 1-3pm, 3-5pm (2 hours each)
-- Maximum 2 volunteers per slot
-- Coordinator email: ${COORDINATOR_EMAIL}
-
-CURRENT BOOKINGS:
-${JSON.stringify(getBookingsSummary(),null,2)}
-
-RULES:
-1. Volunteers can book as a PAIR — "me and Mary Jones". Extract BOTH names and book them together.
-2. "Just me" or "I can do" = solo booking.
-3. If a slot already has 2 people it is FULL — apologise and suggest alternatives on the same day or nearby.
-4. If slot has 1 person and they book as a pair, that works (fills it).
-5. "When am I working?" — look up ${volName} in the bookings and list their shifts clearly.
-6. "What's free?" — friendly plain-English summary.
-7. If they say "Saturday" without a date, ask which one or suggest the next available.
-8. If they say just "Aldi" without specifying, ask — Westhoughton or Cutacre?
-9. Be warm, encouraging, short sentences. No jargon. These volunteers are wonderful people.
-10. Always confirm the exact date, store and time slot back to them before booking.
-
-When you have confirmed a booking, end your message with this on its own line:
-BOOKING:{"date":"2025-10-25","store":"Sainsbury's","slot":"9–11am","volunteers":["${volName}"]}
-
-For a pair booking:
-BOOKING:{"date":"2025-10-25","store":"Sainsbury's","slot":"9–11am","volunteers":["${volName}","Mary Jones"]}
-
-For a cancellation:
-CANCEL:{"date":"2025-10-25","store":"Sainsbury's","slot":"9–11am","volunteer":"${volName}"}`;
-
-  try{
-    const resp=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:systemPrompt,messages:conversation})
-    });
-
-    if(!resp.ok){
-      removeLoading();
-      const code=resp.status;
-      let msg=code===401||code===403?
-        'The booking assistant needs the page to be fully hosted to work. Try asking <strong>"what slots are free?"</strong> — that works right now!':
-        code===429?'The assistant is very busy. Please wait a moment and try again.':
-        'Something went wrong (error '+code+'). Try <strong>"what slots are free?"</strong> instead.';
-      addMsg('ai',msg);
-      document.getElementById('send-btn').disabled=false;
-      inp.focus();
-      return;
-    }
-
-    const data=await resp.json();
-    const fullText=data.content.map(c=>c.text||'').join('');
-    removeLoading();
-
-    let displayText=fullText, booking=null, cancel=null;
-    const bMatch=fullText.match(/BOOKING:(\{[^\n]+\})/);
-    const cMatch=fullText.match(/CANCEL:(\{[^\n]+\})/);
-    if(bMatch){try{booking=JSON.parse(bMatch[1]);}catch(e){}displayText=displayText.replace(/BOOKING:\{[^\n]+\}/,'').trim();}
-    if(cMatch){try{cancel=JSON.parse(cMatch[1]);}catch(e){}displayText=displayText.replace(/CANCEL:\{[^\n]+\}/,'').trim();}
-
-    conversation.push({role:'assistant',content:fullText});
-    const msgEl=addMsg('ai',displayText);
-
-    if(booking){
-      const dateObj=new Date(booking.date+'T12:00:00');
-      const dk=dateKey(dateObj);
-      const volunteers=booking.volunteers||[volName];
-      if(bookings[dk]&&bookings[dk][booking.store]&&bookings[dk][booking.store][booking.slot]){
-        const slotArr=bookings[dk][booking.store][booking.slot];
-        if(slotArr.length+volunteers.length<=MAX_PER_SLOT){
-          volunteers.forEach(v=>{if(!slotArr.includes(v))slotArr.push(v);});
-          const link=document.createElement('a');
-          link.href=makeICS(booking,dateObj,volunteers);
-          link.className='ics-link'; link.download='poppy-appeal-shift.ics';
-          link.textContent='📅 Download Calendar Reminder';
-          msgEl.appendChild(link);
-          saveToSheet(booking,dateObj,volunteers);
-        }
-      }
-    }
-
-    if(cancel){
-      const dk=dateKey(new Date(cancel.date+'T12:00:00'));
-      if(bookings[dk]?.[cancel.store]?.[cancel.slot]){
-        const idx=bookings[dk][cancel.store][cancel.slot].indexOf(cancel.volunteer);
-        if(idx>-1) bookings[dk][cancel.store][cancel.slot].splice(idx,1);
-      }
-    }
-
-  }catch(e){
-    removeLoading();
-    addMsg('ai','There was a connection problem. Try asking <strong>"what slots are free?"</strong> — that works without an internet connection to the AI.');
-  }
-
-  document.getElementById('send-btn').disabled=false;
-  inp.focus();
+  volunteers.forEach(v=>{if(!slotArr.includes(v))slotArr.push(v);});
+  closeModal();
+  document.getElementById('success-msg').innerHTML='Thank you, <strong>'+nameRaw+'</strong>!<br><br>📍 <strong>'+store+'</strong><br>📅 <strong>'+fmtDate(date)+'</strong><br>🕐 <strong>'+slot+'</strong><br><br>Download your calendar reminder below so you don\'t forget!';
+  document.getElementById('ics-link').href=makeICS(date,store,slot,volunteers);
+  document.getElementById('grid-view').style.display='none';
+  document.getElementById('success-view').style.display='';
+  saveToSheet({store,slot,volunteers,email,date:dk});
+  buildGrid();
 }
 
-function getBookingsSummary(){
-  const s={};
-  Object.entries(bookings).forEach(([dk,stores])=>{
-    const label=fmtDate(new Date(dk+'T12:00:00')); s[label]={};
-    Object.entries(stores).forEach(([store,slots])=>{
-      s[label][store]={};
-      Object.entries(slots).forEach(([slot,names])=>{
-        s[label][store][slot]=names.length===0?'AVAILABLE (0/2)':names.length>=MAX_PER_SLOT?'FULL: '+names.join(' & '):'1/2 booked: '+names.join(', ');
-      });
-    });
-  });
-  return s;
+function showGridView(){
+  document.getElementById('success-view').style.display='none';
+  document.getElementById('grid-view').style.display='';
+  buildGrid();
 }
 
-function makeICS(booking,dateObj,volunteers){
-  const slotStart=booking.slot.split('–')[0].replace('am','').replace('pm','').trim();
+function makeICS(dateObj,store,slot,volunteers){
+  const slotStart=slot.split('–')[0].replace('am','').replace('pm','').trim();
   let h=parseInt(slotStart);
-  if(booking.slot.includes('pm')&&h!==12) h+=12;
+  if(slot.includes('pm')&&h!==12) h+=12;
   const pad=n=>String(n).padStart(2,'0');
   const base=dateObj.toISOString().split('T')[0].replace(/-/g,'');
   const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Westhoughton Poppy Appeal//EN',
-    'BEGIN:VEVENT',
-    'DTSTART:'+base+'T'+pad(h)+'0000',
-    'DTEND:'+base+'T'+pad(h+2)+'0000',
-    'SUMMARY:Poppy Appeal — '+booking.store,
-    'DESCRIPTION:Thank you '+volunteers.join(' & ')+'! Your shift is '+booking.slot+' at '+booking.store+'. Questions? Email '+COORDINATOR_EMAIL+'. Lest we forget.',
-    'LOCATION:'+booking.store+', Westhoughton',
-    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    'BEGIN:VEVENT','DTSTART:'+base+'T'+pad(h)+'0000','DTEND:'+base+'T'+pad(h+2)+'0000',
+    'SUMMARY:Poppy Appeal — '+store,
+    'DESCRIPTION:Thank you '+volunteers.join(' & ')+'! Shift: '+slot+' at '+store+'. Questions? '+COORDINATOR_EMAIL+'. Lest we forget.',
+    'LOCATION:'+store+', Westhoughton','END:VEVENT','END:VCALENDAR'].join('\r\n');
   return 'data:text/calendar;charset=utf-8,'+encodeURIComponent(ics);
 }
 
-async function saveToSheet(booking,dateObj,volunteers){
-  if(!SHEET_URL){
-    setSaveNotice('');
-    return;
-  }
-  setSaveNotice('Saving to rota...');
+async function saveToSheet(data){
+  if(!SHEET_URL) return;
   try{
+    const dateObj=new Date(data.date+'T12:00:00');
     await fetch(SHEET_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({
-      name:volunteers.join(' & '), email:volEmail||'not provided',
-      store:booking.store, date:fmtDate(dateObj),
-      slot:booking.slot, bookedAt:new Date().toISOString()
+      name:data.volunteers.join(' & '),email:data.email||'not provided',
+      store:data.store,date:fmtDate(dateObj),slot:data.slot,bookedAt:new Date().toISOString()
     })});
-    setSaveNotice('Saved to Lindsay\'s rota ✓');
-  }catch(e){
-    setSaveNotice('Could not save to rota — please let Lindsay know.');
-  }
-}
-
-function setSaveNotice(msg){
-  const el=document.getElementById('save-notice');
-  if(el) el.textContent=msg;
+  }catch(e){}
 }
 
 function renderRota(){
-  const el=document.getElementById('rota-content');
-  el.innerHTML='';
+  const el=document.getElementById('rota-content');el.innerHTML='';
   DATES.forEach(d=>{
     const dk=dateKey(d);
-    const sec=document.createElement('div');
-    sec.className='rota-section';
+    const sec=document.createElement('div');sec.className='rota-section';
     sec.innerHTML='<h3>'+fmtDate(d)+'</h3>';
-    const grid=document.createElement('div');
-    grid.className='rota-grid';
+    const grid=document.createElement('div');grid.className='rota-grid';
     grid.innerHTML='<div class="rota-hdr left">Store</div>'+SLOTS.map(s=>'<div class="rota-hdr">'+s+'</div>').join('');
     STORES.forEach(store=>{
-      const lbl=document.createElement('div');
-      lbl.className='rota-hdr left'; lbl.textContent=store;
-      grid.appendChild(lbl);
+      const lbl=document.createElement('div');lbl.className='rota-hdr left';lbl.textContent=store;grid.appendChild(lbl);
       SLOTS.forEach(slot=>{
         const names=bookings[dk]?.[store]?.[slot]||[];
         const cell=document.createElement('div');
-        let cls='open', status='Empty';
+        let cls='open',status='Empty';
         if(names.length>=MAX_PER_SLOT){cls='full';status='Full ✓';}
         else if(names.length===1){cls='half';status='1 booked';}
         cell.className='rota-cell '+cls;
@@ -482,11 +361,11 @@ function renderRota(){
         grid.appendChild(cell);
       });
     });
-    sec.appendChild(grid);
-    el.appendChild(sec);
+    sec.appendChild(grid);el.appendChild(sec);
   });
 }
+
+buildGrid();
 </script>
 </body>
 </html>
-HTMLEOF
