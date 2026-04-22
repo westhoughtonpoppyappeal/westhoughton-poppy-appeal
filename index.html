@@ -189,7 +189,7 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
 <script>
 const CORRECT_PIN='0898';
 const COORDINATOR_EMAIL='westhoughtonpoppyappeal@gmail.com';
-const SHEET_URL='https://script.google.com/macros/s/AKfycbyHE9daOaHVbjNW_Chbz6U-TvJIDfbIK6nXkViet0Ap8gPLiXm23YhF8d0IywLRY--i/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbw-ty8FgqmmCSlRllufG901QtMKsBCrPgXCeqP7Uwbjfn3menkF1ATgUw4t4wqIUo4Szw/exec';
 const SLOTS=['9–11am','11–1pm','1–3pm','3–5pm'];
 const STORES=["Sainsbury's","Aldi Westhoughton","Aldi Cutacre","Lidl Westhoughton"];
 const MAX_PER_SLOT=2;
@@ -422,7 +422,31 @@ function deleteFromSheet(dk,store,slot,name){
   }catch(e){}
 }
 
-buildGrid();
+// Load existing bookings from sheet on startup
+async function loadBookings(){
+  document.getElementById('booking-grid-container').innerHTML='<p style="color:#888;font-size:15px;padding:20px 0;">Loading current bookings...</p>';
+  try{
+    const resp=await fetch(SHEET_URL+'?action=load');
+    const data=await resp.json();
+    if(data.success&&data.bookings){
+      data.bookings.forEach(function(b){
+        DATES.forEach(function(d){
+          if(fmtDate(d)===b.date){
+            const dk=dateKey(d);
+            if(bookings[dk]&&bookings[dk][b.store]&&bookings[dk][b.store][b.slot]){
+              if(!bookings[dk][b.store][b.slot].includes(b.name)){
+                bookings[dk][b.store][b.slot].push(b.name);
+              }
+            }
+          }
+        });
+      });
+    }
+  }catch(e){}
+  buildGrid();
+}
+
+loadBookings();
 </script>
 </body>
 </html>
