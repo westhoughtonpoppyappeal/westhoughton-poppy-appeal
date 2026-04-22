@@ -336,7 +336,6 @@ function saveToSheet(data){
   if(!SHEET_URL) return;
   try{
     const dateObj=new Date(data.date+'T12:00:00');
-    // Save each volunteer as a separate row with a small delay between them
     data.volunteers.forEach(function(volunteer, index){
       setTimeout(function(){
         const params=new URLSearchParams({
@@ -349,6 +348,10 @@ function saveToSheet(data){
         });
         const img=new Image();
         img.src=SHEET_URL+'?'+params.toString();
+        // After last volunteer saved, reload from sheet to get row numbers
+        if(index===data.volunteers.length-1){
+          setTimeout(function(){ loadBookings(); }, 2000);
+        }
       }, index * 1000);
     });
   }catch(e){}
