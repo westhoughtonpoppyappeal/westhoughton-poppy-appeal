@@ -187,7 +187,7 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
 <script>
 const CORRECT_PIN='0898';
 const COORDINATOR_EMAIL='westhoughtonpoppyappeal@gmail.com';
-const SHEET_URL='https://script.google.com/macros/s/AKfycbzp8qp6Sz3kSGFdUTbXT8mbSn6mKi6Fe_0JnjJ9fg11TC52JgxvMf5rc-oLyI2gZ0clUw/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbzVrky9Qw5OY1eywdbEgtQd9bINKLum2FzJGtoMDus5sXC0VNh_j5gg2iyEvmCAi-9ADQ/exec';
 const SLOTS=['9–11am','11–1pm','1–3pm','3–5pm'];
 const STORES=["Sainsbury's","Aldi Westhoughton","Aldi Cutacre","Lidl Westhoughton"];
 const MAX_PER_SLOT=2;
@@ -329,14 +329,20 @@ function makeICS(dateObj,store,slot,volunteers){
   return 'data:text/calendar;charset=utf-8,'+encodeURIComponent(ics);
 }
 
-async function saveToSheet(data){
+function saveToSheet(data){
   if(!SHEET_URL) return;
   try{
     const dateObj=new Date(data.date+'T12:00:00');
-    await fetch(SHEET_URL,{method:'POST',mode:'no-cors',body:JSON.stringify({
-      name:data.volunteers.join(' & '),email:data.email||'not provided',
-      store:data.store,date:fmtDate(dateObj),slot:data.slot,bookedAt:new Date().toISOString()
-    })});
+    const params=new URLSearchParams({
+      name:data.volunteers.join(' & '),
+      email:data.email||'not provided',
+      store:data.store,
+      date:fmtDate(dateObj),
+      slot:data.slot,
+      bookedAt:new Date().toISOString()
+    });
+    const img=new Image();
+    img.src=SHEET_URL+'?'+params.toString();
   }catch(e){}
 }
 
