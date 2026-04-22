@@ -189,7 +189,7 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
 <script>
 const CORRECT_PIN='0898';
 const COORDINATOR_EMAIL='westhoughtonpoppyappeal@gmail.com';
-const SHEET_URL='https://script.google.com/macros/s/AKfycbwd7gnMQ_wyElmSv4ooOE1K4MDX8Xile6JNoGdsIZ9t5ISEIzCCMq6IPhGY1fVt2GW0Ag/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbyO9I2fKKWJoJMuoB58R8iFdjaMnYhFVm8rgOpzSMPDxd1J5xryOseHVX7Yr7BUC2ky/exec';
 const SLOTS=['9–11am','11–1pm','1–3pm','3–5pm'];
 const STORES=["Sainsbury's","Aldi Westhoughton","Aldi Cutacre","Lidl Westhoughton"];
 const MAX_PER_SLOT=2;
@@ -213,6 +213,7 @@ DATES.forEach(d=>{
 });
 
 let pendingBooking=null;
+const rowMap={};  // stores sheet row numbers keyed by name|store|slot|dk
 
 function showTab(t){
   document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',(i===0&&t==='book')||(i===1&&t==='rota')));
@@ -410,15 +411,20 @@ function cancelVolunteer(dk,store,slot,name){
 function deleteFromSheet(dk,store,slot,name){
   if(!SHEET_URL) return;
   try{
-    const params=new URLSearchParams({
-      action:'delete',
-      name:name,
-      store:store,
-      date:fmtDate(new Date(dk+'T12:00:00')),
-      slot:slot
-    });
+    const key=name+'|'+store+'|'+slot+'|'+dk;
+    const row=rowMap[key];
+    const params=new URLSearchParams({action:'delete'});
+    if(row){
+      params.set('row',row);
+    } else {
+      params.set('name',name);
+      params.set('store',store);
+      params.set('date',fmtDate(new Date(dk+'T12:00:00')));
+      params.set('slot',slot);
+    }
     const img=new Image();
     img.src=SHEET_URL+'?'+params.toString();
+    delete rowMap[key];
   }catch(e){}
 }
 
@@ -436,6 +442,9 @@ async function loadBookings(){
             if(bookings[dk]&&bookings[dk][b.store]&&bookings[dk][b.store][b.slot]){
               if(!bookings[dk][b.store][b.slot].includes(b.name)){
                 bookings[dk][b.store][b.slot].push(b.name);
+                // Store the row number against name+store+slot+date for deletion
+                const key=b.name+'|'+b.store+'|'+b.slot+'|'+dk;
+                rowMap[key]=b.row;
               }
             }
           }
