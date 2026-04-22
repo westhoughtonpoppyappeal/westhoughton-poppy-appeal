@@ -436,13 +436,16 @@ async function loadBookings(){
     const data=await resp.json();
     if(data.success&&data.bookings){
       data.bookings.forEach(function(b){
+        // Match date by comparing just day+month+year numbers, ignoring weekday name differences
         DATES.forEach(function(d){
-          if(fmtDate(d)===b.date){
-            const dk=dateKey(d);
+          const dk=dateKey(d);
+          // Compare date numerically - extract day and month from both
+          const siteDate=d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+          const sheetDate=b.date.replace(/^[A-Za-z]+\s*/,''); // strip weekday
+          if(siteDate===sheetDate){
             if(bookings[dk]&&bookings[dk][b.store]&&bookings[dk][b.store][b.slot]){
               if(!bookings[dk][b.store][b.slot].includes(b.name)){
                 bookings[dk][b.store][b.slot].push(b.name);
-                // Store the row number against name+store+slot+date for deletion
                 const key=b.name+'|'+b.store+'|'+b.slot+'|'+dk;
                 rowMap[key]=b.row;
               }
