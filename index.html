@@ -189,7 +189,7 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
 <script>
 const CORRECT_PIN='0898';
 const COORDINATOR_EMAIL='westhoughtonpoppyappeal@gmail.com';
-const SHEET_URL='https://script.google.com/macros/s/AKfycbxoppp1WBhhwlPvycPJcSTutOMvAAf9IrwrQp46WHNxU32eQvDpJ5tNomR-GvZqyrzypw/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbyHE9daOaHVbjNW_Chbz6U-TvJIDfbIK6nXkViet0Ap8gPLiXm23YhF8d0IywLRY--i/exec';
 const SLOTS=['9–11am','11–1pm','1–3pm','3–5pm'];
 const STORES=["Sainsbury's","Aldi Westhoughton","Aldi Cutacre","Lidl Westhoughton"];
 const MAX_PER_SLOT=2;
@@ -335,16 +335,19 @@ function saveToSheet(data){
   if(!SHEET_URL) return;
   try{
     const dateObj=new Date(data.date+'T12:00:00');
-    const params=new URLSearchParams({
-      name:data.volunteers.join(' & '),
-      email:data.email||'not provided',
-      store:data.store,
-      date:fmtDate(dateObj),
-      slot:data.slot,
-      bookedAt:new Date().toISOString()
+    // Save each volunteer as a separate row so cancellations work individually
+    data.volunteers.forEach(function(volunteer){
+      const params=new URLSearchParams({
+        name:volunteer,
+        email:data.email||'not provided',
+        store:data.store,
+        date:fmtDate(dateObj),
+        slot:data.slot,
+        bookedAt:new Date().toISOString()
+      });
+      const img=new Image();
+      img.src=SHEET_URL+'?'+params.toString();
     });
-    const img=new Image();
-    img.src=SHEET_URL+'?'+params.toString();
   }catch(e){}
 }
 
