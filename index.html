@@ -335,18 +335,20 @@ function saveToSheet(data){
   if(!SHEET_URL) return;
   try{
     const dateObj=new Date(data.date+'T12:00:00');
-    // Save each volunteer as a separate row so cancellations work individually
-    data.volunteers.forEach(function(volunteer){
-      const params=new URLSearchParams({
-        name:volunteer,
-        email:data.email||'not provided',
-        store:data.store,
-        date:fmtDate(dateObj),
-        slot:data.slot,
-        bookedAt:new Date().toISOString()
-      });
-      const img=new Image();
-      img.src=SHEET_URL+'?'+params.toString();
+    // Save each volunteer as a separate row with a small delay between them
+    data.volunteers.forEach(function(volunteer, index){
+      setTimeout(function(){
+        const params=new URLSearchParams({
+          name:volunteer,
+          email:data.email||'not provided',
+          store:data.store,
+          date:fmtDate(dateObj),
+          slot:data.slot,
+          bookedAt:new Date().toISOString()
+        });
+        const img=new Image();
+        img.src=SHEET_URL+'?'+params.toString();
+      }, index * 1000);
     });
   }catch(e){}
 }
