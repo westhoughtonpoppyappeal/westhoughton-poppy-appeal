@@ -91,6 +91,8 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
 .dot-r.orange { background: #856404; }
 .dot-r.green { background: #155724; }
 .print-btn { width: 100%; padding: 13px; background: #8B0000; color: white; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: Georgia, serif; margin-bottom: 14px; font-weight: bold; }
+.cancel-vol { display: inline-block; background: #8B0000; color: white; border: none; border-radius: 4px; font-size: 10px; padding: 2px 6px; cursor: pointer; margin-top: 3px; font-family: Georgia, serif; }
+.cancel-vol:hover { background: #a00000; }
 @media (max-width: 480px) {
   .booking-grid { grid-template-columns: 80px repeat(4,1fr); gap: 3px; }
   .grid-hdr,.grid-day,.slot-btn { font-size: 10px; }
@@ -187,7 +189,7 @@ body { font-family: Georgia, serif; background: #b8d4e8; min-height: 100vh; }
 <script>
 const CORRECT_PIN='0898';
 const COORDINATOR_EMAIL='westhoughtonpoppyappeal@gmail.com';
-const SHEET_URL='https://script.google.com/macros/s/AKfycbzVrky9Qw5OY1eywdbEgtQd9bINKLum2FzJGtoMDus5sXC0VNh_j5gg2iyEvmCAi-9ADQ/exec';
+const SHEET_URL='https://script.google.com/macros/s/AKfycbxoppp1WBhhwlPvycPJcSTutOMvAAf9IrwrQp46WHNxU32eQvDpJ5tNomR-GvZqyrzypw/exec';
 const SLOTS=['9–11am','11–1pm','1–3pm','3–5pm'];
 const STORES=["Sainsbury's","Aldi Westhoughton","Aldi Cutacre","Lidl Westhoughton"];
 const MAX_PER_SLOT=2;
@@ -363,12 +365,56 @@ function renderRota(){
         if(names.length>=MAX_PER_SLOT){cls='full';status='Full ✓';}
         else if(names.length===1){cls='half';status='1 booked';}
         cell.className='rota-cell '+cls;
-        cell.innerHTML=status+(names.length?'<div class="vol-names">'+names.join('<br>')+'</div>':'');
+        if(names.length===0){
+          cell.innerHTML=status;
+        } else {
+          cell.innerHTML='';
+          names.forEach((name,i)=>{
+            const nameDiv=document.createElement('div');
+            nameDiv.className='vol-names';
+            nameDiv.style.marginBottom='2px';
+            const nameSpan=document.createElement('span');
+            nameSpan.textContent=name;
+            const cancelBtn=document.createElement('button');
+            cancelBtn.className='cancel-vol';
+            cancelBtn.textContent='✕ Remove';
+            cancelBtn.onclick=()=>cancelVolunteer(dk,store,slot,name);
+            nameDiv.appendChild(nameSpan);
+            nameDiv.appendChild(document.createElement('br'));
+            nameDiv.appendChild(cancelBtn);
+            cell.appendChild(nameDiv);
+          });
+        }
         grid.appendChild(cell);
       });
     });
     sec.appendChild(grid);el.appendChild(sec);
   });
+}
+
+function cancelVolunteer(dk,store,slot,name){
+  if(!confirm('Remove '+name+' from '+store+' on '+fmtDate(new Date(dk+'T12:00:00'))+', '+slot+'?')) return;
+  const arr=bookings[dk][store][slot];
+  const idx=arr.indexOf(name);
+  if(idx>-1) arr.splice(idx,1);
+  deleteFromSheet(dk,store,slot,name);
+  renderRota();
+  buildGrid();
+}
+
+function deleteFromSheet(dk,store,slot,name){
+  if(!SHEET_URL) return;
+  try{
+    const params=new URLSearchParams({
+      action:'delete',
+      name:name,
+      store:store,
+      date:fmtDate(new Date(dk+'T12:00:00')),
+      slot:slot
+    });
+    const img=new Image();
+    img.src=SHEET_URL+'?'+params.toString();
+  }catch(e){}
 }
 
 buildGrid();
