@@ -212,7 +212,7 @@ for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
   if(day===5||day===6||day===0) DATES.push(new Date(d));
 }
 
-function dateKey(d){return d.toISOString().split('T')[0];}
+function dateKey(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return y+'-'+m+'-'+day;}
 function fmtDate(d){return d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).replace(',','');}
 function fmtShort(d){return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'});}
 
